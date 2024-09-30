@@ -1,152 +1,68 @@
-# Static-Rag
-Pathway RAG Application Using Streamlit UI
-This project showcases how to build a Retrieval-Augmented Generation (RAG) application with Pathway and Streamlit, incorporating the Gemini API for NLP tasks.
+# Pathway RAG Application with Streamlit UI
 
-Table of Contents
-Overview
-Key Features
-Workflow
-Pathway Tools
-LLM Integration
-Requirements
-Installation Guide
-Configuration Setup
-Running the Application
-Locally
-Using Docker
-Application Usage
-Adding Your Own Data
-Querying and Searching Documents
-Question Answering (With or Without RAG)
-Summarization
-API Endpoints
-Customization Options
-Overview
-This app blends the real-time document indexing and retrieval strengths of Pathway with the simplicity of Streamlit's UI. By leveraging the Gemini API for NLP tasks such as question-answering and summarization, the application delivers an always-up-to-date knowledge base for your LLM without requiring separate ETL processes.
+This project demonstrates how to create a Retrieval-Augmented Generation (RAG) application using [Pathway](https://github.com/pathwaycom/pathway) and [Streamlit](https://streamlit.io/), integrated with the Gemini API for natural language processing tasks.
 
-Key Features
-Query static documents in a local directory using RAG or without it.
-Search through indexed documents with custom filters.
-Display a list of all indexed documents and related metadata.
-Summarize multiple text inputs simultaneously.
-Workflow
-Pathway connectors capture data from various sources (like local files, Google Drive, and SharePoint) with low-latency change detection. The unstructured library parses and divides binary objects into chunks, which are then embedded using the Gemini API.
+## Table of Contents
+- [Overview](#overview)
+- [Features](#features)
+- [How It Works](#how-it-works)
+- [Pathway Tooling](#pathway-tooling)
+- [LLM Functionality](#llm-functionality)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Configuration](#configuration)
+  - [LLM Model](#llm-model)
+  - [API Key Configuration](#api-key-configuration)
+- [How to Run](#how-to-run)
+  - [Running Locally](#running-locally)
+  - [Running with Docker](#running-with-docker)
+- [Using the Application](#using-the-application)
+  - [Adding your own data](#adding-your-own-data)
+  - [Querying Documents](#querying-documents)
+  - [Listing Inputs](#listing-inputs)
+  - [Searching Documents](#searching-documents)
+  - [Asking Questions (With and Without RAG)](#asking-questions-with-and-without-rag)
+  - [Summarization](#summarization)
+- [API Endpoints](#api-endpoints)
+- [Customization](#customization)
 
-The embeddings are indexed with Pathway's machine learning tools, allowing users to query the index through HTTP requests to specified endpoints.
+## Overview
 
-Pathway Tools
-Custom Prompts & UDFs: Pathway allows users to define prompts and stream operations using the @pw.udf decorator.
-RAG Components: Pathway's toolkit includes a vector store and web server, enabling the complete setup for a RAG app.
-Connectors: Seamless integration with various data sources.
-LLM Integration
-The app uses the Gemini API to:
+This application combines the power of Pathway's real-time document indexing and retrieval capabilities with a user-friendly Streamlit interface. It uses the Gemini API for natural language processing tasks such as question answering and text summarization, providing an always up-to-date knowledge base for your LLM without the need for separate ETL processes.
 
-Generate embeddings for document chunks.
-Answer questions based on the retrieved context.
-Summarize text inputs.
-Different models within the Gemini API can be configured, providing flexibility in performance and cost management.
+## Features
 
-Requirements
-Python 3.7 or newer
-Pathway
-Streamlit
-Access to Gemini API
-Installation Guide
-Clone the repository:
+- Ask questions with or without RAG from static documents in the local directory (Retrieval-Augmented Generation)
+- Search indexed documents with customizable filters
+- List all indexed documents with metadata
+- Summarize multiple texts
 
-bash
-Copy code
-git clone https://github.com/nrk-necro/pathway-rag-streamlit.git
-cd pathway-rag-streamlit
-Install the dependencies:
+## How It Works
 
-bash
-Copy code
-pip install -r requirements.txt
-Configuration Setup
-LLM Model
-Configure the Gemini model in the config.yaml file:
+The pipeline leverages Pathway connectors to read data from various sources (local drive, Google Drive, SharePoint) with low-latency change detection. Binary objects are parsed using the [unstructured](https://unstructured.io/) library and split into chunks. The Gemini API is used to embed these chunks.
 
-yaml
-Copy code
-llm_config:
-  model: "gemini/gemini-pro"
-API Key
-Store your Gemini API key in a .env file:
+Embeddings are indexed using Pathway's machine learning library. Users can query the index through HTTP requests made to the provided endpoints.
 
-bash
-Copy code
-GEMINI_API_KEY=your_api_key_here
-Running the Application
-Using Docker
-Build the Docker image:
+## Pathway Tooling
 
-bash
-Copy code
-docker build -t pathway-rag-streamlit .
-Run the container:
+- **Prompts and Helpers**: Pathway enables custom prompt definitions and user-defined functions (UDFs) with the `@pw.udf` decorator for streaming data operations.
+- **RAG Components**: Pathway offers tools like a vector store and web server (via REST connector) to build a complete RAG solution.
+- **Connectors**: A range of connectors are available for seamless integration of different data sources.
 
-bash
-Copy code
-docker run -v $(pwd)/data:/app/data -p 8000:8000 -p 8501:8501 pathway-rag-streamlit
-Running Locally
-To run locally, execute the following in a terminal:
+## LLM Functionality
 
-bash
-Copy code
-streamlit run streamlit_app.py
-Navigate to the Streamlit URL (usually http://localhost:8501) in your browser.
+The application uses the Gemini API to:
+- Generate embeddings for document chunks
+- Answer questions based on retrieved context
+- Summarize text inputs
 
-Application Usage
-The Streamlit interface offers four key features:
+The LLM model can be configured within the Gemini API, providing flexibility between performance and cost.
 
-Ask a Question: Submit questions, with or without using RAG and filters.
-List Documents: Browse all indexed documents along with their metadata.
-Summarize Texts: Input multiple texts for summary generation.
-Adding Your Own Data
-You can replace the default document, "Zombie Survival Guide - Complete Protection from the Living Dead.pdf", with your own files by adding them to the data folder.
+## Prerequisites
 
-Querying and Searching Documents
-To list all indexed inputs with metadata, use this command:
+```yaml
+- Python 3.7+
+- Pathway
+- Streamlit
+- Access to Gemini API
 
-bash
-Copy code
-curl -X POST 'http://localhost:8000/v1/pw_list_documents' -H 'accept: */*' -H 'Content-Type: application/json'
-To search within your indexed documents:
-
-bash
-Copy code
-curl -X POST 'http://localhost:8000/v1/retrieve' -H 'accept: */*' -H 'Content-Type: application/json' -d '{
-  "query": "Your search query here",
-  "k": 5
-}'
-Question Answering (With and Without RAG)
-For asking questions using RAG:
-
-bash
-Copy code
-curl -X POST 'http://localhost:8000/v1/pw_ai_answer' -H 'accept: */*' -H 'Content-Type: application/json' -d '{
-  "prompt": "Your question here",
-  "filters": "contains(path, `docx`)"
-}'
-Summarization
-To summarize a list of texts:
-
-bash
-Copy code
-curl -X POST 'http://localhost:8000/v1/pw_ai_summary' -H 'accept: */*' -H 'Content-Type: application/json' -d '{
-  "text_list": [
-    "Text 1 to summarize",
-    "Text 2 to summarize"
-  ]
-}'
-API Endpoints
-/v1/pw_ai_answer: Question answering.
-/v1/pw_list_documents: Lists all indexed documents (metadata).
-/v1/pw_ai_summary: Text summarization.
-Customization Options
-To modify the application:
-
-Edit the app.py file for backend logic or to introduce new features.
-Adjust the streamlit_app.py file to update the user interface or introduce new functionalities.
-Tweak the config.yaml file to change data sources, model configurations, or other settings.
