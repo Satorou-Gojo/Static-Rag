@@ -28,20 +28,20 @@ This project demonstrates how to create a Retrieval-Augmented Generation (RAG) a
 
 ## Overview
 
-This application combines the power of Pathway's real-time document indexing and retrieval capabilities with a user-friendly Streamlit interface. It uses the Gemini API for natural language processing tasks such as question answering and text summarization, providing an always up-to-date knowledge base for your LLM without the need for separate ETL processes.
+This app blends the real-time document indexing and retrieval strengths of Pathway with the simplicity of Streamlit's UI. By leveraging the Gemini API for NLP tasks such as question-answering and summarization, the application delivers an always-up-to-date knowledge base for your LLM without requiring separate ETL processes.
 
-## Features
+## Key Features
 
-- Ask questions with or without RAG from static documents in the local directory (Retrieval-Augmented Generation)
-- Search indexed documents with customizable filters
-- List all indexed documents with metadata
-- Summarize multiple texts
+-Query static documents in a local directory using RAG or without it.
+-Search through indexed documents with custom filters.
+-Display a list of all indexed documents and related metadata.
+-Summarize multiple text inputs simultaneously.
 
-## How It Works
+## WorkFlow
 
-The pipeline leverages Pathway connectors to read data from various sources (local drive, Google Drive, SharePoint) with low-latency change detection. Binary objects are parsed using the [unstructured](https://unstructured.io/) library and split into chunks. The Gemini API is used to embed these chunks.
+Pathway connectors capture data from your local folder(data). The unstructured library parses and divides binary objects into chunks, which are then embedded using the Gemini API.
 
-Embeddings are indexed using Pathway's machine learning library. Users can query the index through HTTP requests made to the provided endpoints.
+The embeddings are indexed with Pathway's machine learning tools, allowing users to query the index through HTTP requests to specified endpoints.
 
 ## Pathway Tooling
 
