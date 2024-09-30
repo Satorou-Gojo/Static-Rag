@@ -20,9 +20,7 @@ This project demonstrates how to create a Retrieval-Augmented Generation (RAG) a
   - [Adding your own data](#adding-your-own-data)
   - [Querying Documents](#querying-documents)
   - [Listing Inputs](#listing-inputs)
-  - [Searching Documents](#searching-documents)
   - [Asking Questions (With and Without RAG)](#asking-questions-with-and-without-rag)
-  - [Summarization](#summarization)
 - [API Endpoints](#api-endpoints)
 - [Customization](#customization)
 
