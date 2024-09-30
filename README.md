@@ -109,7 +109,7 @@ GEMINI_API_KEY=your_api_key_here
 
 2. Run the container:
    ```
-   docker run -v $(pwd)/data:/app/data -p 8000:8000 -p 8501:8501 pathway-rag-streamlit
+   docker run -v $(pwd)/data:/app/data -p 8080:8000 -p 8501:8501 pathway-rag-streamlit
    ```
 
 
@@ -130,10 +130,9 @@ The Streamlit interface provides four main tabs:
 
 1. **Ask Question**: Enter a question and optionally use RAG with filters.
 2. **List Documents**: View all indexed documents and their metadata.
-3. **Summarize Texts**: Input multiple texts and get a summary.
 
 ## Adding your own data
-Currently, the RAG application uses the book 'Zombie Survival Guide - Complete Protection from the Living Dead.pdf'. Howeever, you can add your own data in the data folder.
+Currently, the RAG application uses the book '01 Red Rising.pdf'. However, you can add your own data in the data folder.
 
 ## Querying Documents
 
@@ -145,22 +144,9 @@ To get a list of available inputs and associated metadata:
 curl -X 'POST' 'http://localhost:8000/v1/pw_list_documents' -H 'accept: */*' -H 'Content-Type: application/json'
 ```
 
-### Searching Documents
 
-To search within your documents:
 
-```bash
-curl -X 'POST' \
-  'http://localhost:8000/v1/retrieve' \
-  -H 'accept: */*' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "query": "Your search query here",
-  "k": 5
-}'
-```
-
-### Asking Questions (With and Without RAG)
+### Asking Questions 
 
 To ask a question using RAG:
 
@@ -175,22 +161,7 @@ curl -X 'POST' \
 }'
 ```
 
-### Summarization
 
-To summarize a list of texts:
-
-```bash
-curl -X 'POST' \
-  'http://localhost:8000/v1/pw_ai_summary' \
-  -H 'accept: */*' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "text_list": [
-    "Text 1 to summarize",
-    "Text 2 to summarize"
-  ]
-}'
-```
 
 ## API Endpoints
 
